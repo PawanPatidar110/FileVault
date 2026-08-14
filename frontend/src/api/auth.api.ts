@@ -14,20 +14,20 @@ interface RegisterPayload {
 }
 
 export const registerUser = async (payload:RegisterPayload) => {
-    const response = await api.post("/auth/register",payload);
+    const response = await api.post("/api/auth/register",payload);
 
     return response.data;
 };
 
 
 export const loginUser = async (payload:LoginPayload):Promise<AuthResponse> => {
-    const response = await api.post("/auth/login",payload);
+    const response = await api.post("/api/auth/login",payload);
 
     return response.data;
 }
 
 export const getMe = async () => {
-    const response = await api.get("/auth/me");
+    const response = await api.get("/api/auth/me");
 
     return response.data;
 }
