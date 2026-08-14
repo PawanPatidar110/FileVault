@@ -33,7 +33,7 @@ export const loginUser = async (
     email:string,password:string
 ):Promise<AuthResponse> => {
     const user = await prisma.user.findUnique({
-        where:{email}
+        where:{email:email}
     });
 
     if(!user){
