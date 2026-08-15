@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import type { FileItem } from "../types/file";
-import { getSharedFile } from "../api/file.api";
+import { getSharedFile , downloadSharedFile, } from "../api/file.api";
 import { ArrowDownToLine, Cloud, File, FileArchive, FileImage, FileText, Lock, ShieldCheck } from "lucide-react";
 
 const SharedFile = () => {
@@ -60,6 +60,44 @@ const SharedFile = () => {
             />
         );
     }
+
+const handleDownload = async () => {
+    try {
+        if (!shareToken || !file) {
+            return;
+        }
+
+        const blob =
+            await downloadSharedFile(
+                shareToken
+            );
+
+        const url =
+            URL.createObjectURL(blob);
+
+        const anchor =
+            document.createElement("a");
+
+        anchor.href = url;
+
+        anchor.download =
+            file.originalName;
+
+        document.body.appendChild(anchor);
+
+        anchor.click();
+
+        anchor.remove();
+
+        URL.revokeObjectURL(url);
+
+    } catch (error) {
+        console.error(
+            "Failed to download shared file:",
+            error
+        );
+    }
+};
 
     return (
         <div className="
@@ -380,35 +418,34 @@ const SharedFile = () => {
 
                             </div>
 
-                            <a
-                                href={`${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/files/share/${file.shareToken}/download`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="
-                                    flex
-                                    h-12
-                                    w-full
-                                    items-center
-                                    justify-center
-                                    gap-2
-                                    rounded-xl
-                                    bg-violet-500
-                                    text-sm
-                                    font-medium
-                                    text-white
-                                    shadow-lg
-                                    shadow-violet-500/10
-                                    transition
-                                    hover:bg-violet-400
-                                    active:scale-[0.99]
-                                "
-                            >
-                                <ArrowDownToLine
-                                    size={17}
-                                />
+<button
+    type="button"
+    onClick={handleDownload}
+    className="
+        flex
+        h-12
+        w-full
+        items-center
+        justify-center
+        gap-2
+        rounded-xl
+        bg-violet-500
+        text-sm
+        font-medium
+        text-white
+        shadow-lg
+        shadow-violet-500/10
+        transition
+        hover:bg-violet-400
+        active:scale-[0.99]
+    "
+>
+    <ArrowDownToLine
+        size={17}
+    />
 
-                                Download file
-                            </a>
+    Download file
+</button>
 
                         </div>
 
