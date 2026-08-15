@@ -57,7 +57,7 @@ export const getSharedFile = async (
     shareToken: string
 ) => {
     const response = await api.get(
-        `/files/share/${shareToken}`
+        `/api/files/share/${shareToken}`
     );
 
     return response.data.data;
