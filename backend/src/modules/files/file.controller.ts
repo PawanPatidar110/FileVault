@@ -223,7 +223,7 @@ export const downloadSharedFile = async (
     next:NextFunction
 ) => {
     try {
-        const sharedToken = req.params.sharedToken as string;
+        const sharedToken = req.params.shareToken as string;
 
         if(!sharedToken){
             return res.status(400).json({

@@ -9,6 +9,8 @@ const SharedFile = () => {
         shareToken: string;
     }>();
 
+    console.log("sharedToken",shareToken);
+
     const [file, setFile] =
         useState<FileItem | null>(null);
 
